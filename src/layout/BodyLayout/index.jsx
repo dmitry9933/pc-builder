@@ -27,6 +27,8 @@ const BodyLayout = ({ children }) => {
               label: <NavLink to={item.link}>{item.label}</NavLink>,
               key: item.link,
             }))}
+            style={{ background: "transparent" }}
+            className={classes.menu}
           />
         </Header>
         <Content

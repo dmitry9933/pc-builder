@@ -1,15 +1,29 @@
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
-  hello: {
-    color: "blue",
-  },
-  header: {
-    background: "blue",
-  },
   body: {
-    background: "yellow",
+    display: "flex",
+    alignItems: "center",
+    // justifyContent: "center",
+    minHeight: 500,
+    flexDirection: "column",
+    "& > div": {
+      // flexGrow: 1,
+    },
   },
+  summary: {
+    minHeight: 280,
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 10,
+    "& > div": {
+      overflow: "hidden",
+      borderRadius: 15,
+      flexShrink: 0,
+      height: 100,
+    },
+  },
+
   carouselWrapper: {
     "& h3": {
       "& img": {

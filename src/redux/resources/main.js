@@ -1,32 +1,41 @@
 import { createResource } from "redux-rest-resource";
-// import { setAuthHeader } from "../../helpers/authStorage";
-
-import { API_URL } from "../../constants/config";
-// import { getAuthData } from "../../helpers/authStorage";
+import { API_URL, isMockData } from "../../constants/config";
+// import { mockReduxData } from "../data-mock";
 
 export const { types, actions, rootReducer } = createResource({
   name: "main",
-  // url: `${API_URL}/main`,
 
   actions: {
     get: {
       method: "GET",
       url: `${API_URL}/computerparts/:partName`,
-      // transformResponse: (res,action) => {
-      //   console.log(res,action)
-      //   return { ...res, body: res.body };
-      // },
-      reduce: (state, action) => {
-        if (action.status === "resolved") {
-          console.log(action);
-          return {
-            ...state,
-           [action.context.partName]: action.payload.body,
-          };
-        }
-        return state;
-      },
+
+      // isPure: isMockData,
+    //   reduce: (state, action) => {
+    //     if (action.status === "resolved") {
+    //       console.log(action);
+    //       return {
+    //         ...state,
+    //         [action.context.partName]: isMockData
+    //           ? mockReduxData[action.context.partName]
+    //           : action.payload.body,
+    //       };
+    //     }
+    //     return state;
+    //   },
+    // },
+
+    reduce: (state, action) => {
+      if (action.status === "resolved") {
+        console.log(action);
+        return {
+          ...state,
+         [action.context.partName]: action.payload.body,
+        };
+      }
+      return state;
     },
+  },
     saveUploaded: {
       method: "POST",
     },
@@ -100,5 +109,3 @@ export const { types, actions, rootReducer } = createResource({
     },
   },
 });
-
-// setAuthHeader(getAuthData().accessToken);
