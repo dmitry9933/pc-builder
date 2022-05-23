@@ -16,7 +16,9 @@ const BodyLayout = ({ children }) => {
             position: "fixed",
             zIndex: 1,
             width: "100%",
+            background: "#5497c8"
           }}
+          
         >
           <div className="logo" />
           <Menu

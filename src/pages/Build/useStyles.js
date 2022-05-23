@@ -4,12 +4,11 @@ const useStyles = createUseStyles({
   body: {
     display: "flex",
     alignItems: "center",
-    // justifyContent: "center",
     minHeight: 500,
     flexDirection: "column",
-    "& > div": {
-      // flexGrow: 1,
-    },
+    // "& > div": {
+    //   // flexGrow: 1,
+    // },
   },
   summary: {
     minHeight: 280,
