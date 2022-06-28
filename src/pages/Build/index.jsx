@@ -1,4 +1,4 @@
-import { Collapse, Image, Select } from "antd";
+import { Button, Collapse, Image, Select } from "antd";
 import React, { useState } from "react";
 import { partTypes, possibleKeys } from "../../constants/config";
 import useHooks from "./useHooks";
@@ -18,15 +18,48 @@ const Build = () => {
   const { items } = useHooks();
   const [selectedItems, setSelectedItems] = useState({
     cases: null,
-    cpu: null,
     cpucoolers: null,
+    cpu: null,
     memory: null,
     motherboard: null,
-    powersupply: null,
-    storage: null,
     videocard: null,
+    storage: null,
+    powersupply: null,
   });
   const [displayedItem, setDisplayedItem] = useState({});
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favorites")) || []
+  );
+  const getBiggestId = () => {
+    let id = 1;
+    favorites.forEach((e) => {
+      if (e.id >= id) {
+        id = e.id + 1;
+      }
+    });
+    return id;
+  };
+  const handleSave = () => {
+    // if (favorites.find((e) => e.id === selectedItems?.id)) {
+    //   const index = favorites.findIndex((e) => e.id === selectedItems?.id);
+    //   const newFav = favorites.map((e) =>
+    //     e.id === selectedItems.id ? selectedItems : e
+    //   );
+    //   localStorage.setItem("favorites", JSON.stringify(newFav));
+    //   setFavorites(newFav);
+    // } else {
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify([...favorites, { ...selectedItems, id: getBiggestId() }])
+    );
+    setFavorites([...favorites, { ...selectedItems, id: getBiggestId() }]);
+    // }
+  };
+  const handleDelete = (id) => (event) => {
+    const newArr = favorites.filter((e) => e.id !== id);
+    localStorage.setItem("favorites", JSON.stringify(newArr));
+    setFavorites(newArr);
+  };
 
   // const getNames = () => {
   //   const arr = [];
@@ -117,12 +150,12 @@ const Build = () => {
       <div className={classes.summary}>
         <div
           style={{
-            width: 100,
+            width: 300,
             height: 100,
             backgroundColor: "white",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "space-evenly",
             textAlign: "center",
             fontWeight: "bold",
           }}
@@ -142,19 +175,73 @@ const Build = () => {
             );
           })}{" "}
           UAH
+          <Button onClick={handleSave}>Save</Button>
+          {/* set selected parts empty object */}
+          <Button
+            onClick={() =>
+              setSelectedItems({
+                cases: null,
+                cpucoolers: null,
+                cpu: null,
+                memory: null,
+                motherboard: null,
+                videocard: null,
+                storage: null,
+                powersupply: null,
+              })
+            }
+          >
+            Clear
+          </Button>
+          {/* <Button onClick={() => window.location.reload(false)}>Clear</Button> */}
         </div>
         {Array.from(Object.keys(selectedItems)).map((key) => {
-          return (
+          return key === "id" ? null : (
             <div>
               {" "}
               <Image
                 fallback={fbimage}
                 style={{ width: 100, height: 100 }}
-                src={selectedItems[key]?.image}
+                src={
+                  selectedItems[key]?.image
+                    ? selectedItems[key]?.image
+                    : fbimage
+                }
               />
             </div>
           );
         })}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <span style={{ fontWeight: "bold" }}>Saved</span>
+        <div style={{ display: "flex", flexDirection: "row", gap: 10 }}>
+          {favorites.map((item, i) => {
+            return (
+              <div
+                style={{
+                  background: "white",
+                  borderRadius: 15,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 10,
+                  width: 100,
+                  height: 100,
+                  textAlign: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                {item.id}
+                <div>
+                  {" "}
+                  <Button onClick={() => setSelectedItems(item)}>
+                    Load
+                  </Button>{" "}
+                  <Button onClick={handleDelete(item.id)}>Delete</Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );

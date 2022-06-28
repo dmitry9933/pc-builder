@@ -4,7 +4,7 @@ import useStyles from "./useStyles";
 import { headerLinks } from "../../constants/links";
 import { NavLink } from "react-router-dom";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const BodyLayout = ({ children }) => {
   const classes = useStyles();

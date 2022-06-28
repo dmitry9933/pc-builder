@@ -9,8 +9,8 @@ const useStyles = createUseStyles({
       "&:hover": {
         background: "#224160 !important",
       },
-      borderRadius: 0,
-      marginRight: 0,
+      // borderRadius: 0,
+      // marginRight: 0,
       background: "#376b9c !important",
 
       "& a": {

@@ -1,1 +1,1 @@
-export const headerLinks = [{ label: "Build", link: "/build" }];
+export const headerLinks = [{ label: "Build a PC", link: "/build" }];
